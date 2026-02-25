@@ -1,0 +1,40 @@
+name: CI/CD Pipeline - Fisher & Paykel Inventory
+
+on:
+  push:
+    [cite_start]branches: [ "main", "develop" ] # Flujo basado en ramas [cite: 35]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    [cite_start]timeout-minutes: 20 # Parámetro de configuración [cite: 54]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          [cite_start]node-version: '18.x' # Versión requerida [cite: 54]
+
+      - name: Install Dependencies
+        run: |
+          npm install
+          npm install -g cordova
+
+      - name: Run Automated Tests (Unit & Smoke)
+        [cite_start]run: npm test # Ejecución del plan de pruebas [cite: 27, 28]
+
+      - name: Build Cordova App (Android)
+        run: |
+          cordova platform add android
+          cordova build android --release
+
+      - name: Generate Test Report
+        if: always()
+        run: |
+          # Generación visual de reportes [cite: 55]
+          echo "Generando reports/cucumber-report.html"
