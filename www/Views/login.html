@@ -1,0 +1,80 @@
+<div class="d-flex flex-column vh-100">
+    <br>
+    <!-- Línea superior con imagen centrada -->
+    <div class="w-100 d-flex justify-content-center align-items-center" style="height: 60px;">
+        <img src="Public/img/Fisherlogo.png" alt="Logo" style="max-height: 200px;">
+    </div>
+
+    <!-- Contenedor principal centrado -->
+    <div class="d-flex justify-content-center align-items-center flex-grow-1">
+        <div class="col-12 col-sm-9 col-md-6 col-lg-4">
+            <div class="card rounded-lg" style="background-color: rgb(206, 212, 219); margin-top: -20vh;">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Inicio de sesión</h5>
+                    <form>
+                        <div class="form-group">
+                            <label for="email">Correo Electrónico</label>
+                            <input type="text" class="form-control border-dark rounded-pill Email" id="Email" placeholder="Ingrese su Correo" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Contraseña</label>
+                            <input type="password" class="form-control border-dark rounded-pill Password" id="Password" placeholder="Ingrese su contraseña" required>
+                        </div>
+                        <div class="text-center mt-3">
+                            <button type="submit" class="btn btn-block border-dark rounded-pill">Iniciar Sesión</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var form = document.querySelector('form');
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+            var EmailForm = document.getElementById('Email').value;
+            var PasswordForm = document.getElementById('Password').value;
+            
+            var userlogincom = LoginComprobation(EmailForm, PasswordForm);
+
+            if (userlogincom !== null) {
+                // Verifica si los campos son nulos o vacíos
+                const isEmpty = (value) => value === null || value === '';
+                
+                if (!isEmpty(userlogincom.firstname) && 
+                    !isEmpty(userlogincom.lastname) && 
+                    !isEmpty(userlogincom.area) && 
+                    !isEmpty(userlogincom.position)) {
+                    
+                    // Si los campos no son nulos ni vacíos, realiza una acción para el inicio exitoso
+                    alert("Inicio Exitoso");
+                    loadPartialView('PrincipalMenu', document.querySelector('.app'));
+                    
+                } else if (isEmpty(userlogincom.firstname) && 
+                        isEmpty(userlogincom.lastname) && 
+                        isEmpty(userlogincom.area) && 
+                        isEmpty(userlogincom.position)) {
+                    
+                    // Si todos los campos están vacíos, realiza otra acción
+                    alert("Cuenta encontrada");
+                    loadPartialView('DataForm', document.querySelector('.app'));
+                    localStorage.setItem("Next", JSON.stringify(userlogincom));
+                    
+                }
+            } else {
+                // Si no existe en ninguno de los dos, muestra la alerta
+                alert("Usuario no existe");
+            }
+
+
+            // Saveuserslogin(User);
+            
+            // localStorage.setItem("Next", JSON.stringify(User));
+
+            
+    });
+  </script>

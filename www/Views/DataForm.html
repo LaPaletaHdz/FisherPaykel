@@ -1,0 +1,72 @@
+<div class="d-flex flex-column vh-100">
+    <br>
+    <!-- Línea superior con imagen centrada -->
+    <div class="w-100 d-flex justify-content-center align-items-center" style="height: 60px;">
+        <img src="Public/img/Fisherlogo.png" alt="Logo" style="max-height: 200px;">
+    </div>
+
+    <!-- Contenedor principal centrado -->
+    <div class="d-flex justify-content-center align-items-center flex-grow-1">
+        <div class="col-12 col-sm-9 col-md-6 col-lg-4">
+            <div class="card rounded-lg" style="background-color: rgb(206, 212, 219); margin-top: -10vh;">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Datos Personales</h5>
+                    <form>
+                        <div class="form-group">
+                            <label for="Firstname">Primer Nombre</label>
+                            <input type="text" class="form-control border-dark rounded-pill Firstname" id="Firstname" placeholder="Ingrese su Primer Nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="Lastname">Primer Apellido</label>
+                            <input type="text" class="form-control border-dark rounded-pill Lastname" id="Lastname" placeholder="Ingrese su Primer Apellido" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="Area">Área</label>
+                            <input type="text" class="form-control border-dark rounded-pill Area" id="Area" placeholder="Ingrese su Área" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="Position">Puesto</label>
+                            <input type="text" class="form-control border-dark rounded-pill Position" id="Position" placeholder="Ingrese su contraseña" required>
+                        </div>
+                        <div class="text-center mt-3">
+                            <button type="submit" class="btn btn-block border-dark rounded-pill">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var form = document.querySelector('form');
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+            var lol = getLocalStorage("Next");
+
+            var Firstname = document.getElementById('Firstname').value;
+            var Lastname = document.getElementById('Lastname').value;
+            var Area = document.getElementById('Area').value;
+            var Position = document.getElementById('Position').value;
+            var UserDataForm = {
+                firstname: Firstname,
+                lastname: Lastname,
+                area: Area,
+                position: Position
+            }
+            
+            var updatedUser  = EditUser (lol.email, lol.password, UserDataForm);
+
+            if (updatedUser ) {
+                alert("Inicio de sesion correcto");
+                loadPartialView('PrincipalMenu', document.querySelector('.app'))
+            } else {
+                console.log("No se pudo actualizar el usuario.");
+            }
+
+
+
+    });
+  </script>

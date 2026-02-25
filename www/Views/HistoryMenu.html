@@ -1,0 +1,50 @@
+<div class="d-flex flex-column vh-100">
+    <!-- Línea superior con imagen centrada -->
+    <div class="w-100 d-flex justify-content-center align-items-center border border-dark"
+        style="background-color: rgb(206, 212, 219); height: 60px;">
+        <i type="button" data-toggle="collapse" data-target="#sidebar" aria-expanded="false" aria-controls="sidebar" class="bi bi-list fs-1" style="margin-right: -1vh; margin-left: 2vh;"></i>
+        <!-- Espacio entre el ícono y el borde izquierdo -->
+        <div class="flex-grow-1 text-center"> <!-- Este div ayuda a centrar la imagen -->
+            <img src="Public/img/Fisherlogo.png" alt="Logo" style="max-height: 200px;">
+        </div>
+    </div>
+    
+        <div class="row w-100">
+            <!-- Barra lateral -->
+            <div class="col-md-12 collapse" id="sidebar">
+                <div class="rounded-lg border border-dark text-white p-4" style="background-color: rgb(206, 212, 219);">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-person-circle fs-1 text-black"></i>
+                        <div class="UserName text-black" style="margin-left: 1vh;">Nombre de usuario</div>
+                    </div>
+                    <ul class="list-unstyled mt-3">
+                        <li class="bg-white rounded-lg border border-dark mt-2" onclick="loadPartialView('PrincipalMenu', document.querySelector('.app'))"><a class="text-black ms-1">Materiales</a></li>
+                        <li class="bg-white rounded-lg border border-dark mt-2" onclick="loadPartialView('HistoryMenu', document.querySelector('.app'))"><a class="text-black ms-1">Historial</a></li>
+                        <li class="bg-white rounded-lg border border-dark mt-2" onclick="loadPartialView('UsersMenu', document.querySelector('.app'))"><a class="text-black ms-1">Usuarios</a></li>
+                    </ul>
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-power fs-1 text-black"></i>
+                        <div class="text-black" style="margin-left: 1vh;" onclick="loadPartialView('login', document.querySelector('.app'))">Cerrar Sesión</div>
+                    </div>
+                </div>
+            </div>
+
+    <!-- Contenedor principal centrado -->
+    <div class="d-flex flex-grow-1 mt-4 ms-3">
+        <div class="col-12 col-sm-9 col-md-6 col-lg-4">
+            <div class="w-50 rounded-lg border border-dark text-center mx-auto" style="height: auto">
+                Historial
+            </div>
+            <div class="w-80 rounded-lg border border-dark mx-auto mt-4 p-3" style="height: auto;">
+                <div>Nombre de la Ubicación</div>
+                <div>Descripcion</div>
+                <div>Materiales</div>
+                <div>Ultimo registro</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+</script>

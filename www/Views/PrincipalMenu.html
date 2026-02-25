@@ -1,0 +1,173 @@
+<div class="d-flex flex-column vh-100">
+    <!-- Línea superior con imagen centrada -->
+    <div class="w-100 d-flex justify-content-center align-items-center border border-dark"
+        style="background-color: rgb(206, 212, 219); height: 60px;">
+        <i type="button" data-toggle="collapse" data-target="#sidebar" aria-expanded="false" aria-controls="sidebar" class="bi bi-list fs-1" style="margin-right: -1vh; margin-left: 2vh;"></i>
+        <!-- Espacio entre el ícono y el borde izquierdo -->
+        <div class="flex-grow-1 text-center"> <!-- Este div ayuda a centrar la imagen -->
+            <img src="Public/img/Fisherlogo.png" alt="Logo" style="max-height: 200px;">
+        </div>
+    </div>
+    
+        <div class="row w-100">
+            <!-- Barra lateral -->
+            <div class="col-md-12 collapse" id="sidebar">
+                <div class="rounded-lg border border-dark text-white p-4" style="background-color: rgb(206, 212, 219);">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-person-circle fs-1 text-black"></i>
+                        <div class="UserName text-black" style="margin-left: 1vh;">Nombre de usuario</div>
+                    </div>
+                    <ul class="list-unstyled mt-3">
+                        <li class="bg-white rounded-lg border border-dark mt-2" onclick="loadPartialView('PrincipalMenu', document.querySelector('.app'))"><a class="text-black ms-1">Materiales</a></li>
+                        <li class="bg-white rounded-lg border border-dark mt-2" onclick="loadPartialView('HistoryMenu', document.querySelector('.app'))"><a class="text-black ms-1">Historial</a></li>
+                        <li class="bg-white rounded-lg border border-dark mt-2" onclick="loadPartialView('UsersMenu', document.querySelector('.app'))"><a class="text-black ms-1">Usuarios</a></li>
+                    </ul>
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-power fs-1 text-black"></i>
+                        <div class="text-black" style="margin-left: 1vh;" onclick="loadPartialView('login', document.querySelector('.app'))">Cerrar Sesión</div>
+                    </div>
+                </div>
+            </div>
+
+    <!-- Contenedor principal centrado -->
+    <div class="d-flex flex-grow-1 mt-4">
+        <div class="col-12 col-sm-9 col-md-6 col-lg-4">
+            <div class="w-50 rounded-lg border border-dark text-center mx-auto" style="height: auto">
+                Todos los materiales
+            </div>
+            <div class="w-50 rounded-lg border border-dark align-items-center text-center mt-3" style="height: auto">
+                Buscar
+            </div>
+
+            <!-- Div donde se hace clic -->
+            <div class="w-80 rounded-lg d-flex justify-content-center align-items-center border border-dark mx-auto mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal" style="height: auto;">
+                Agregar material
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Formulario para agregar material</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form class="MaterialForm">
+                                <div class="mb-3">
+                                    <label for="Asset" class="form-label">Asset</label>
+                                    <input type="number" class="form-control" id="Asset" placeholder="Ingresa el numero de asset">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="location" class="form-label">Ubicacion</label>
+                                    <input type="text" class="form-control" id="location" placeholder="Ingresa la Ubicacion">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="model" class="form-label">Modelo</label>
+                                    <input type="text" class="form-control" id="model" placeholder="Ingresa el modelo">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="branch" class="form-label">Marca</label>
+                                    <input type="text" class="form-control" id="branch" placeholder="Ingresa la marca">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="serial" class="form-label">Numero de serie</label>
+                                    <input type="text" class="form-control" id="serial" placeholder="Ingresa el numero de serie">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="state" class="form-label">Estado Actual</label>
+                                    <input type="text" class="form-control" id="state" placeholder="Ingresa el estado actual">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="description" class="form-label">Descripción</label>
+                                    <input type="text" class="form-control" id="description" placeholder="Ingresa una descripcion">
+                                </div>
+                                <!-- Puedes agregar más campos según sea necesario -->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-block border-dark rounded-pill" data-bs-dismiss="modal">Cerrar</button>
+                                    <button type="submit" class="btn btn-block border-dark rounded-pill" data-bs-dismiss="modal">Guardar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contenedor"></div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+function cargarDatosDesdeLocalStorage() {
+    const assetsContainer = document.querySelector('.contenedor'); // Verifica el selector de la clase
+
+    if (!assetsContainer) {
+        console.error('El contenedor con la clase .contenedor no existe en el DOM.');
+        return;
+    }
+
+    // Limpiar el contenedor antes de agregar nuevos elementos
+    assetsContainer.innerHTML = '';
+
+    // Obtener los datos de localStorage
+    const assets = GetAllMaterials();
+
+    // Verificar si hay datos en el localStorage
+    if (assets.length === 0) {
+        console.warn('No hay datos en el localStorage.');
+        return;
+    }
+
+    // Crear los divs para cada objeto en el array
+    assets.forEach((asset) => {
+        const assetDiv = document.createElement('div');
+        assetDiv.className = 'w-80 rounded-lg border border-dark mx-auto mt-4 p-3';
+        assetDiv.style.height = 'auto';
+
+        assetDiv.innerHTML = `
+            <div><strong>Asset:</strong> ${asset.asset}</div>
+            <div><strong>Ubicación:</strong> ${asset.location}</div>
+            <div><strong>Modelo:</strong> ${asset.model}</div>
+            <div><strong>Marca:</strong> ${asset.branch}</div>
+            <div><strong>Número de serie:</strong> ${asset.serial}</div>
+            <div><strong>Estado Actual:</strong> ${asset.state}</div>
+            <div><strong>Descripción:</strong> ${asset.description}</div>
+        `;
+
+        // Agregar el div al contenedor
+        assetsContainer.appendChild(assetDiv);
+    });
+}
+
+
+setInterval(cargarDatosDesdeLocalStorage, 1000);
+
+    var Materialform = document.querySelector('.MaterialForm');
+
+    Materialform.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+        var AssetForm = document.getElementById('Asset').value;
+        var LocationForm = document.getElementById('location').value;
+        var ModelForm = document.getElementById('model').value;
+        var BranchForm = document.getElementById('branch').value;
+        var SerialForm = document.getElementById('serial').value;
+        var StateForm = document.getElementById('state').value;
+        var DescriptionForm = document.getElementById('description').value;
+
+        var material = {
+            asset: AssetForm,
+            location: LocationForm,
+            model: ModelForm,
+            branch: BranchForm,
+            serial: SerialForm,
+            state: StateForm,
+            description: DescriptionForm
+        }
+
+        Savematerials(material);
+        
+});
+</script>
